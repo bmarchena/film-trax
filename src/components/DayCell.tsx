@@ -9,7 +9,7 @@ const DayCell = ({ day }: DayCellProps) => {
 
 	return (
 		<div
-			className="border-1 m-0.25 hover:cursor-pointer hover:text-amber-700"
+			className="border-1 m-0.25 hover:cursor-pointer hover:text-amber-300"
 			onClick={clickHandler}
 		>
 			<div className="border-1 p-1">{day + 1}</div>
