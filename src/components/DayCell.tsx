@@ -1,18 +1,18 @@
 interface DayCellProps {
-	dayIndex: number;
+	day: number;
 }
 
-const DayCell = ({ dayIndex }: DayCellProps) => {
+const DayCell = ({ day }: DayCellProps) => {
 	const clickHandler = () => {
-		console.log(`Clicked on day ${dayIndex + 1}`);
+		console.log(`Clicked on day ${day + 1}`);
 	};
 
 	return (
 		<div
-			className="border-1 m-0.25 hover:cursor-pointer"
+			className="border-1 m-0.25 hover:cursor-pointer hover:text-amber-700"
 			onClick={clickHandler}
 		>
-			<div className="border-1 p-1">{dayIndex + 1}</div>
+			<div className="border-1 p-1">{day + 1}</div>
 		</div>
 	);
 };

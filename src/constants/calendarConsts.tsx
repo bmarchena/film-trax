@@ -1,3 +1,13 @@
+export const weekdays = {
+	sun: "Sunday",
+	mon: "Monday",
+	tue: "Tuesday",
+	wed: "Wednesday",
+	thu: "Thursday",
+	fri: "Friday",
+	sat: "Saturday",
+};
+
 export const months = {
 	jan: "January",
 	feb: "February",
@@ -13,4 +23,4 @@ export const months = {
 	dec: "December",
 };
 
-export type AbbrMonth = keyof typeof months;
+export type MonthAbbr = keyof typeof months;

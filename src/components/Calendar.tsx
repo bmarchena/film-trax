@@ -1,31 +1,60 @@
-import { months, type AbbrMonth } from "../constants/months";
-import { generateDayCells } from "../utils/dates";
+import { months, weekdays, type MonthAbbr } from "../constants/calendarConsts";
+import DayCell from "./DayCell";
 
 interface CalendarProps {
 	year: number;
-	month: AbbrMonth;
+	month: number;
 }
 
 const Calendar = ({ year, month }: CalendarProps) => {
-	// const date = new Date(2025, 0);
-	// console.log("date", date);
-	// console.log("jan", days["jan"]);
+	const date = new Date(year, month);
 
-	console.log("days", generateDayCells(month));
+	const weekdayColumns = Object.keys(weekdays).map((weekday) => {
+		return (
+			<div className="border-1 m-0.25" key={weekday}>
+				{weekday.toUpperCase()}
+			</div>
+		);
+	});
+
+	const monthName = months[Object.keys(months)[month] as MonthAbbr];
+
+	const generateDayCells = () => {
+		const offset = date.getUTCDay();
+		let dayCells = [];
+
+		for (let i = 0; i < offset; i++) {
+			dayCells.push(<div className="border-1 m-0.25" key={`offset-${i}`} />);
+		}
+
+		const endOfMonth = date;
+		endOfMonth.setUTCMonth(month + 1);
+		endOfMonth.setDate(0);
+
+		const daysOfMonth = endOfMonth.getDate();
+
+		for (let i = 0; i < daysOfMonth; i++) {
+			dayCells.push(<DayCell day={i} key={`${month}-${i}`} />);
+		}
+
+		const padding = 6 - endOfMonth.getDay();
+
+		for (let i = 0; i < padding; i++) {
+			dayCells.push(<div className="border-1 m-0.25" key={`padding-${i}`} />);
+		}
+
+		return dayCells;
+	};
+
+	const dayCells = generateDayCells();
 
 	return (
 		<div className="grid grid-cols-7 border-1">
 			<span className="border-1 col-span-full m-0.25">
-				{months[month]} - {year}
+				{monthName} <br /> {year}
 			</span>
-			<div className="border-1 m-0.25">Mon</div>
-			<div className="border-1 m-0.25">Tue</div>
-			<div className="border-1 m-0.25">Wed</div>
-			<div className="border-1 m-0.25">Thu</div>
-			<div className="border-1 m-0.25">Fri</div>
-			<div className="border-1 m-0.25">Sat</div>
-			<div className="border-1 m-0.25">Sun</div>
-			{generateDayCells(month)}
+			{weekdayColumns}
+			{dayCells}
 		</div>
 	);
 };
