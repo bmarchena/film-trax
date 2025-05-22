@@ -20,6 +20,10 @@ export const generateDayCells = (date: Date, month: number) => {
 
 	const padding = 6 - endOfMonth.getDay();
 
+	console.log("date", date);
+	console.log("endOfMonth", endOfMonth.getDay());
+	console.log("padding", padding);
+
 	for (let i = 0; i < padding; i++) {
 		dayCells.push(<div className="border-1 m-0.25" key={`padding-${i}`} />);
 	}

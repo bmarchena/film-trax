@@ -3,11 +3,15 @@ import "./App.css";
 import Calendar from "./components/Calendar";
 
 function App() {
-	const date = new Date();
-	console.log("date", date);
-	const [month, setMonth] = useState(date.getMonth());
+	// const date = new Date();
+	// console.log("date", date);
+	// date.getMonth()
+	const [month, setMonth] = useState(4);
+	const [year, setYear] = useState(2025);
 
-	return <Calendar year={2025} month={month} setMonth={setMonth} />;
+	return (
+		<Calendar year={year} month={month} setMonth={setMonth} setYear={setYear} />
+	);
 }
 
 export default App;
