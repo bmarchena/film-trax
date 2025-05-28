@@ -23,4 +23,19 @@ export const months = {
 	dec: "December",
 };
 
+export const monthsArr = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December",
+];
+
 export type MonthAbbr = keyof typeof months;
