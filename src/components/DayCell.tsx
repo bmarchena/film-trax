@@ -1,12 +1,12 @@
 interface DayCellProps {
-	day: number;
+	date: Array<number>;
 	selected?: boolean;
 	selectDay: (day: number) => void;
 }
 
-const DayCell = ({ day, selected, selectDay }: DayCellProps) => {
+const DayCell = ({ date, selected, selectDay }: DayCellProps) => {
 	const clickHandler = () => {
-		selectDay(day + 1);
+		selectDay(date[1] + 1);
 	};
 
 	return (
@@ -18,7 +18,7 @@ const DayCell = ({ day, selected, selectDay }: DayCellProps) => {
 			}
 			onClick={clickHandler}
 		>
-			<div className="border-1 p-1">{day + 1}</div>
+			<div className="border-1 p-1">{date[1] + 1}</div>
 		</div>
 	);
 };

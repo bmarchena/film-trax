@@ -74,9 +74,11 @@ const Calendar = () => {
 				selectedDay[0] === date[0] &&
 				selectedDay[2] === date[2];
 
+			const cellDate = [date[0], i, date[2]];
+
 			dayCells.push(
 				<DayCell
-					day={i}
+					date={cellDate}
 					selected={selected}
 					selectDay={selectDay}
 					key={`${endOfMonth.getMonth()}-${i}`}
