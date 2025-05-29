@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 interface DayCellProps {
 	day: number;
 	selected?: boolean;
@@ -9,7 +7,6 @@ interface DayCellProps {
 const DayCell = ({ day, selected, selectDay }: DayCellProps) => {
 	const clickHandler = () => {
 		selectDay(day + 1);
-		console.log(`Clicked on day ${day + 1}`);
 	};
 
 	return (

@@ -11,7 +11,6 @@ const Calendar = () => {
 	const [date, setDate] = useState(today);
 
 	const [selectedDay, setSelectedDay] = useState(today);
-	console.log("selected", selectedDay);
 
 	const monthName = monthsArr[date[0] - 1];
 
@@ -70,7 +69,11 @@ const Calendar = () => {
 		const daysInMonth = endOfMonth.getDate();
 
 		for (let i = 0; i < daysInMonth; i++) {
-			const selected = selectedDay[1] - 1 === i && selectedDay[0] === date[0];
+			const selected =
+				selectedDay[1] - 1 === i &&
+				selectedDay[0] === date[0] &&
+				selectedDay[2] === date[2];
+
 			dayCells.push(
 				<DayCell
 					day={i}
