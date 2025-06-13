@@ -1,16 +1,20 @@
 import { useState } from "react";
 
-const SearchBar = () => {
+interface SearchBarProps {
+	fetchFilm: (query: string) => void;
+}
+
+const SearchBar = ({ fetchFilm }: SearchBarProps) => {
 	const [query, setQuery] = useState("");
 
-	function fetchFilm(term: string) {
-		fetch(`http://www.omdbapi.com/?apikey=a3d6dd5a&t=${term}`)
-			.then((res) => res.json())
-			.then((data) => console.log(data));
-	}
-
 	return (
-		<form action={() => fetchFilm(query)}>
+		<form
+			action={(e) => {
+				console.log("e", e);
+
+				fetchFilm(query);
+			}}
+		>
 			<input
 				className="border-2 rounded-2xl mt-5 p-2"
 				type="text"
@@ -19,7 +23,12 @@ const SearchBar = () => {
 				autoComplete="off"
 				onChange={(e) => setQuery(e.target.value)}
 			/>
-			<button type="submit">Submit</button>
+			<button
+				type="submit"
+				className="border-2 rounded-2xl ml-1 p-2 hover:cursor-pointer"
+			>
+				Submit
+			</button>
 		</form>
 	);
 };
