@@ -8,13 +8,7 @@ const SearchBar = ({ fetchFilm }: SearchBarProps) => {
 	const [query, setQuery] = useState("");
 
 	return (
-		<form
-			action={(e) => {
-				console.log("e", e);
-
-				fetchFilm(query);
-			}}
-		>
+		<form action={() => fetchFilm(query)}>
 			<input
 				className="border-2 rounded-2xl mt-5 p-2"
 				type="text"

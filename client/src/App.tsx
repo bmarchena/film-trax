@@ -17,7 +17,6 @@ function App() {
 		fetch(`http://www.omdbapi.com/?apikey=a3d6dd5a&s=${term}&type=movie`)
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data.Search);
 				setQueriedFilms(data.Search);
 			});
 	}
@@ -33,13 +32,12 @@ function App() {
 		));
 		return cards;
 	}
+	const filmCards = queriedFilms ? generateFilmCards() : [];
 	return (
 		<div>
 			<Calendar />
 			<SearchBar fetchFilm={fetchFilm} />
-			<div className="flex flex-col items-center mt-10">
-				{generateFilmCards()}
-			</div>
+			<div className="flex flex-col items-center mt-10">{filmCards}</div>
 		</div>
 	);
 }
