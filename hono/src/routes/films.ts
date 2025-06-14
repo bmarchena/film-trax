@@ -7,7 +7,7 @@ export const films = new Hono();
 
 films.get("/", async (c) => {
 	const data = await db.select().from(filmsTable);
-	return c.json({ data: data });
+	return c.json({ films: data });
 });
 
 films.post("/add", async (c) => {

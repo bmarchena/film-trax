@@ -2,13 +2,12 @@ import { serve } from "@hono/node-server";
 import { env } from "hono/adapter";
 import { Hono } from "hono";
 import { films } from "./routes/films.js";
+import { dates } from "./routes/dates.js";
 
 const app = new Hono();
 
-app.get("/", (c) => {
-	return c.text("Hello Hono!");
-});
 app.route("/films", films);
+app.route("/dates", dates);
 
 serve(
 	{
