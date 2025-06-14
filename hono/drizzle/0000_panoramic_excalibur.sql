@@ -9,6 +9,7 @@ CREATE TABLE "films" (
 	"title" varchar(255) NOT NULL,
 	"director" varchar(255),
 	"plot" varchar(255),
+	"posterURL" varchar(255),
 	"genre" varchar(255)
 );
 --> statement-breakpoint

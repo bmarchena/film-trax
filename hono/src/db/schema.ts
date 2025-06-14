@@ -5,6 +5,7 @@ export const filmsTable = pgTable("films", {
 	title: varchar({ length: 255 }).notNull(),
 	director: varchar({ length: 255 }),
 	plot: varchar({ length: 255 }),
+	posterURL: varchar({ length: 255 }),
 	genre: varchar({ length: 255 }),
 });
 
