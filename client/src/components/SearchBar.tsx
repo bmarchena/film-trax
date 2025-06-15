@@ -1,14 +1,14 @@
 import { useState } from "react";
 
 interface SearchBarProps {
-	fetchFilm: (query: string) => void;
+	fetchFilmsData: (query: string) => void;
 }
 
-const SearchBar = ({ fetchFilm }: SearchBarProps) => {
+const SearchBar = ({ fetchFilmsData }: SearchBarProps) => {
 	const [query, setQuery] = useState("");
 
 	return (
-		<form action={() => fetchFilm(query)}>
+		<form action={() => fetchFilmsData(query)}>
 			<input
 				className="border-2 rounded-2xl mt-5 p-2"
 				type="text"

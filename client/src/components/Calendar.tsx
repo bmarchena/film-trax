@@ -1,25 +1,19 @@
 import { useState } from "react";
 import { monthsArr, weekdays } from "../constants/calendarConsts";
 import DayCell from "./DayCell";
+import type { DayObj } from "../types";
 
-const Calendar = () => {
-	const todayArr = new Date()
-		.toLocaleDateString()
-		.split("/")
-		.map((e) => Number(e));
+interface CalendarProps {
+	today: DayObj;
+	selectedDate: DayObj;
+	setSelectedDate: (day: DayObj) => void;
+}
 
-	const today = {
-		month: todayArr[0],
-		day: todayArr[1],
-		year: todayArr[2],
-	};
-
+const Calendar = ({ today, selectedDate, setSelectedDate }: CalendarProps) => {
 	const [displayDate, setDisplayDate] = useState({
-		month: todayArr[0],
-		year: todayArr[2],
+		month: selectedDate.month,
+		year: selectedDate.year,
 	});
-
-	const [selectedDay, setSelectedDay] = useState(today);
 
 	const monthName = monthsArr[displayDate.month - 1];
 
@@ -63,7 +57,7 @@ const Calendar = () => {
 	function clickDay(day: number) {
 		const date = { ...displayDate, day: day };
 		date.day = day;
-		setSelectedDay(date);
+		setSelectedDate(date);
 	}
 
 	function generateDayCells() {
@@ -87,9 +81,9 @@ const Calendar = () => {
 			};
 
 			const selected =
-				selectedDay.day - 1 === cellDate.day &&
-				selectedDay.month === cellDate.month &&
-				selectedDay.year === cellDate.year;
+				selectedDate.day - 1 === cellDate.day &&
+				selectedDate.month === cellDate.month &&
+				selectedDate.year === cellDate.year;
 
 			const isToday =
 				today.day - 1 === cellDate.day &&

@@ -22,7 +22,6 @@ const DayCell = ({ date, selected, isToday, clickDay }: DayCellProps) => {
 
 	return (
 		<div className={outerClass} onClick={clickHandler}>
-			{/* <div className="bg-"></div> */}
 			<div className={innerClass}>{date.day + 1}</div>
 		</div>
 	);
