@@ -36,7 +36,7 @@ const Calendar = ({ today, selectedDate, setSelectedDate }: CalendarProps) => {
 			}
 		} else {
 			date.month--;
-			if (date.month < 0) {
+			if (date.month <= 0) {
 				date.month = 12;
 				date.year--;
 			}
