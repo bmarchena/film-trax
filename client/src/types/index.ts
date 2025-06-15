@@ -1,11 +1,11 @@
 export interface Film {
-	Title: string;
-	Director: string;
-	Actors: string;
-	Plot: string;
-	Poster: string;
-	Type: string;
-	Year: string;
+	title: string;
+	director: string;
+	actors: string;
+	plot: string;
+	posterURL: string;
+	type: string;
+	year: string;
 	imdbID: string;
 }
 

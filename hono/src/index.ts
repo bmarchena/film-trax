@@ -1,11 +1,12 @@
 import { serve } from "@hono/node-server";
-import { env } from "hono/adapter";
 import { Hono } from "hono";
 import { films } from "./routes/films.js";
 import { dates } from "./routes/dates.js";
+import { cors } from "hono/cors";
 
 const app = new Hono();
 
+app.use(cors());
 app.route("/films", films);
 app.route("/dates", dates);
 

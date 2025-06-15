@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { monthsArr, weekdays } from "../constants/calendarConsts";
+import { monthsArr, weekdays } from "../constants/calendar";
 import DayCell from "./DayCell";
 import type { DayObj } from "../types";
 

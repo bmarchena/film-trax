@@ -10,6 +10,11 @@ films.get("/", async (c) => {
 	return c.json({ films: data });
 });
 
+films.get("/ids", async (c) => {
+	const data = await db.select({ id: filmsTable.imdbID }).from(filmsTable);
+	return c.json({ ids: data });
+});
+
 films.post("/add", async (c) => {
 	const data = await c.req.json();
 	await db.insert(filmsTable).values(data);

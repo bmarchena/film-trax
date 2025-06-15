@@ -5,6 +5,7 @@ import FilmCard from "./components/FilmCard";
 import type { DayObj, Film } from "./types";
 import { getTodayObj } from "./utils";
 import "./App.css";
+import { addDateToDB, addFilmToDB, fetchFilmOMDB, searchOMDB } from "./api";
 
 function App() {
 	const today = getTodayObj();
@@ -14,45 +15,35 @@ function App() {
 		year: today.year,
 	});
 	const [queriedFilms, setQueriedFilms] = useState<Film[]>([]);
+	const [loading, setLoading] = useState(false);
 
 	function fetchFilmsData(term: string) {
 		if (!term) return;
-		fetch(`http://www.omdbapi.com/?apikey=a3d6dd5a&s=${term}&type=movie`)
-			.then((res) => res.json())
-			.then((data) => {
-				return data.Search;
-			})
+		setLoading(true);
+		searchOMDB(term)
 			.then(async (films) => {
 				return await Promise.all(
 					films.map((film: Film) => {
-						return fetch(
-							`http://www.omdbapi.com/?apikey=a3d6dd5a&i=${film.imdbID}`
-						)
-							.then((res) => res.json())
-							.then((data) => ({
-								Title: data.Title,
-								Director: data.Director,
-								Year: data.Year,
-								Actors: data.Actors,
-								Plot: data.Plot,
-								Poster: data.Poster,
-								Type: data.Type,
-								imdbID: data.imdbID,
-							}));
+						return fetchFilmOMDB(film);
 					})
 				);
 			})
-			.then((data) => setQueriedFilms(data));
+			.then((data) => setQueriedFilms(data))
+			.finally(() => setLoading(false));
 	}
 
 	function generateFilmCards() {
 		const cards = queriedFilms.map((film) => (
-			<FilmCard film={film} key={`imdb-${film.imdbID}`} />
+			<FilmCard film={film} addFilm={addFilm} key={`imdb-${film.imdbID}`} />
 		));
 		return cards;
 	}
 
-	const filmCards = generateFilmCards();
+	function addFilm(film: Film) {
+		addFilmToDB(film).then(() => addDateToDB(selectedDate, film));
+	}
+
+	const filmCards = loading ? <div>Loading...</div> : generateFilmCards();
 
 	return (
 		<div>
@@ -62,7 +53,11 @@ function App() {
 				setSelectedDate={setSelectedDate}
 			/>
 			<SearchBar fetchFilmsData={fetchFilmsData} />
-			<div className="flex flex-col items-center mt-10">{filmCards}</div>
+			{loading ? (
+				<div>Loading...</div>
+			) : (
+				<div className="flex flex-col items-center mt-10">{filmCards}</div>
+			)}
 		</div>
 	);
 }
