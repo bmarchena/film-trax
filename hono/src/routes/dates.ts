@@ -9,7 +9,7 @@ dates.get("/", async (c) => {
 	const data = await db
 		.select()
 		.from(datesTable)
-		.innerJoin(filmsTable, eq(datesTable.film, filmsTable.imdbID));
+		.innerJoin(filmsTable, eq(datesTable.imdbId, filmsTable.imdbId));
 	return c.json({ dates: data });
 });
 

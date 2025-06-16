@@ -15,6 +15,13 @@
       "when": 1749991700246,
       "tag": "0001_dusty_revanche",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1750092909845,
+      "tag": "0002_elite_prodigy",
+      "breakpoints": true
     }
   ]
 }

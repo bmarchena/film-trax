@@ -11,7 +11,9 @@ films.get("/", async (c) => {
 });
 
 films.get("/ids", async (c) => {
-	const data = await db.select({ id: filmsTable.imdbID }).from(filmsTable);
+	const data = (
+		await db.select({ id: filmsTable.imdbId }).from(filmsTable)
+	).map((obj) => obj.id);
 	return c.json({ ids: data });
 });
 
@@ -22,7 +24,7 @@ films.post("/add", async (c) => {
 });
 
 films.delete("/remove/:id", async (c) => {
-	const filmID = c.req.param("id");
-	await db.delete(filmsTable).where(eq(filmsTable.imdbID, filmID));
+	const imdbId = c.req.param("id");
+	await db.delete(filmsTable).where(eq(filmsTable.imdbId, imdbId));
 	return c.text(`Film removed!`);
 });

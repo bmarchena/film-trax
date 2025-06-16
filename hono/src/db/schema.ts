@@ -1,7 +1,7 @@
-import { date, integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { date, integer, pgTable, varchar } from "drizzle-orm/pg-core";
 
 export const filmsTable = pgTable("films", {
-	imdbID: varchar({ length: 255 }).notNull().primaryKey(),
+	imdbId: varchar({ length: 255 }).notNull().primaryKey(),
 	title: varchar({ length: 255 }).notNull(),
 	director: varchar({ length: 255 }),
 	actors: varchar({ length: 255 }),
@@ -13,5 +13,5 @@ export const filmsTable = pgTable("films", {
 export const datesTable = pgTable("dates", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
 	date: date({ mode: "string" }).notNull(),
-	film: varchar({ length: 255 }).references(() => filmsTable.imdbID),
+	imdbId: varchar({ length: 255 }),
 });
