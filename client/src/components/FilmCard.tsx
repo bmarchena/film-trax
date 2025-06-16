@@ -9,7 +9,7 @@ const FilmCard = ({ film, addFilm }: FilmCardProps) => {
 	return (
 		<div className="border-2 mb-10 p-5 rounded-4xl w-xl flex flex-col">
 			<a
-				href={`https://imdb.com/title/${film.imdbID}`}
+				href={`https://imdb.com/title/${film.imdbId}`}
 				target="_blank"
 				className="text-2xl hover:text-blue-500"
 			>

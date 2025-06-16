@@ -1,5 +1,3 @@
-import type { Film } from "../types";
-
 export const searchOMDB = (term: string) =>
 	fetch(`http://www.omdbapi.com/?apikey=a3d6dd5a&s=${term}&type=movie`)
 		.then((res) => res.json())
@@ -7,8 +5,8 @@ export const searchOMDB = (term: string) =>
 			return data.Search;
 		});
 
-export const fetchFilmOMDB = (film: Film) =>
-	fetch(`http://www.omdbapi.com/?apikey=a3d6dd5a&i=${film.imdbID}`)
+export const fetchFilmOMDB = (queriedFilm: any) =>
+	fetch(`http://www.omdbapi.com/?apikey=a3d6dd5a&i=${queriedFilm.imdbID}`)
 		.then((res) => res.json())
 		.then((data) => ({
 			title: data.Title,
@@ -18,6 +16,6 @@ export const fetchFilmOMDB = (film: Film) =>
 			plot: data.Plot,
 			posterURL: data.Poster,
 			type: data.Type,
-			imdbID: data.imdbID,
+			imdbId: data.imdbID,
 			genre: data.Genre,
 		}));

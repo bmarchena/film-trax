@@ -17,6 +17,6 @@ export const addDateToDB = (date: DayObj, film: Film) =>
 		},
 		body: JSON.stringify({
 			date: `${date.year}-${date.month}-${date.day}`,
-			film: film.imdbID,
+			imdbId: film.imdbId,
 		}),
 	}).catch((err) => console.error("Error:", err));

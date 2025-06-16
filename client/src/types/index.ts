@@ -6,7 +6,7 @@ export interface Film {
 	posterURL: string;
 	type: string;
 	year: string;
-	imdbID: string;
+	imdbId: string;
 }
 
 export interface DayObj {

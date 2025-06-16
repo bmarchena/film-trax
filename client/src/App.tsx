@@ -34,7 +34,7 @@ function App() {
 
 	function generateFilmCards() {
 		const cards = queriedFilms.map((film) => (
-			<FilmCard film={film} addFilm={addFilm} key={`imdb-${film.imdbID}`} />
+			<FilmCard film={film} addFilm={addFilm} key={`imdb-${film.imdbId}`} />
 		));
 		return cards;
 	}
