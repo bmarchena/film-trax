@@ -7,7 +7,11 @@ export const dates = new Hono();
 
 dates.get("/", async (c) => {
 	const data = await db
-		.select()
+		.select({
+			date: datesTable.date,
+			title: filmsTable.title,
+			imdbId: filmsTable.imdbId,
+		})
 		.from(datesTable)
 		.innerJoin(filmsTable, eq(datesTable.imdbId, filmsTable.imdbId));
 	return c.json({ dates: data });
