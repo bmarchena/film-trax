@@ -1,11 +1,12 @@
-import { useState } from "react";
-import Calendar from "./components/Calendar";
-import SearchBar from "./components/SearchBar";
-import FilmCard from "./components/FilmCard";
+import "./App.css";
+import { useEffect, useState } from "react";
+import { Calendar } from "./components/Calendar/";
+import FilmCard from "./components/Search/FilmCard";
 import type { DayObj, Film } from "./types";
 import { getTodayObj } from "./utils";
-import "./App.css";
 import { addDateToDB, addFilmToDB, fetchFilmOMDB, searchOMDB } from "./api";
+import { getFilmsDB } from "./api/server";
+import { Search } from "./components/Search";
 
 function App() {
 	const today = getTodayObj();
@@ -16,8 +17,15 @@ function App() {
 	});
 	const [queriedFilms, setQueriedFilms] = useState<Film[]>([]);
 	const [loading, setLoading] = useState(false);
+	const [watchedFilmIds, setWatchedFilmIds] = useState<Film[]>([]);
 
-	function fetchFilmsData(term: string) {
+	useEffect(() => {
+		getFilmsDB()
+			.then((data) => data.films.map((obj: Film) => obj.imdbId))
+			.then((filmArray) => setWatchedFilmIds(filmArray));
+	}, []);
+
+	function fetchCardsData(term: string) {
 		if (!term) {
 			setQueriedFilms([]);
 			return;
@@ -35,18 +43,9 @@ function App() {
 			.finally(() => setLoading(false));
 	}
 
-	function generateFilmCards() {
-		const cards = queriedFilms.map((film) => (
-			<FilmCard film={film} addFilm={addFilm} key={`imdb-${film.imdbId}`} />
-		));
-		return cards;
-	}
-
-	function addFilm(film: Film) {
+	function addFilmToDate(film: Film) {
 		addFilmToDB(film).then(() => addDateToDB(selectedDate, film));
 	}
-
-	const filmCards = loading ? <div>Loading...</div> : generateFilmCards();
 
 	return (
 		<div>
@@ -55,12 +54,12 @@ function App() {
 				selectedDate={selectedDate}
 				setSelectedDate={setSelectedDate}
 			/>
-			<SearchBar fetchFilmsData={fetchFilmsData} />
-			{loading ? (
-				<div>Loading...</div>
-			) : (
-				<div className="flex flex-col items-center mt-10">{filmCards}</div>
-			)}
+			<Search
+				addFilmToDate={addFilmToDate}
+				fetchCardsData={fetchCardsData}
+				searchResults={queriedFilms}
+				loading={loading}
+			/>
 		</div>
 	);
 }

@@ -1,11 +1,12 @@
-import type { Film } from "../types";
+import type { Film } from "../../types";
 
 interface FilmCardProps {
 	film: Film;
-	addFilm: (film: Film) => void;
+	addFilmToDate: (film: Film) => void;
 }
 
-const FilmCard = ({ film, addFilm }: FilmCardProps) => {
+const FilmCard = ({ film, addFilmToDate }: FilmCardProps) => {
+	// TODO: Add an image fallback
 	return (
 		<div className="border-2 mb-10 p-5 rounded-4xl xs:w-xs md:w-xl flex flex-col">
 			<a
@@ -35,7 +36,7 @@ const FilmCard = ({ film, addFilm }: FilmCardProps) => {
 			<img
 				src="/src/assets/add.svg"
 				className="m-2 p-3 max-w-15 hover:cursor-pointer hover:text-blue-300 self-end"
-				onClick={() => addFilm(film)}
+				onClick={() => addFilmToDate(film)}
 				alt="Image"
 			/>
 		</div>

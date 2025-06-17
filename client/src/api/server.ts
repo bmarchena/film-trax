@@ -20,3 +20,13 @@ export const addDateToDB = (date: DayObj, film: Film) =>
 			imdbId: film.imdbId,
 		}),
 	}).catch((err) => console.error("Error:", err));
+
+export const getFilmsDB = () =>
+	fetch("http://localhost:8080/films", {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	})
+		.then((res) => res.json())
+		.catch((err) => console.error("Error:", err));

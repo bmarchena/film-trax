@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { monthsArr, weekdays } from "../constants/calendar";
+import { monthsArr, weekdays } from "../../constants/calendar";
 import DayCell from "./DayCell";
-import type { DayObj } from "../types";
+import type { DayObj } from "../../types";
 
 interface CalendarProps {
 	today: DayObj;
