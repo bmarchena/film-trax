@@ -18,7 +18,10 @@ function App() {
 	const [loading, setLoading] = useState(false);
 
 	function fetchFilmsData(term: string) {
-		if (!term) return;
+		if (!term) {
+			setQueriedFilms([]);
+			return;
+		}
 		setLoading(true);
 		searchOMDB(term)
 			.then(async (films) => {

@@ -23,6 +23,13 @@ const SearchBar = ({ fetchFilmsData }: SearchBarProps) => {
 			>
 				Submit
 			</button>
+			<button
+				type="submit"
+				className="border-2 rounded-2xl ml-1 p-2 hover:cursor-pointer"
+				onClick={() => setQuery("")}
+			>
+				Clear
+			</button>
 		</form>
 	);
 };

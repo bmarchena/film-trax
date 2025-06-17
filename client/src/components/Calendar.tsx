@@ -115,30 +115,30 @@ const Calendar = ({ today, selectedDate, setSelectedDate }: CalendarProps) => {
 	return (
 		<div className="grid grid-cols-7 border-1">
 			<div className="border-1 grid grid-cols-3 col-span-full m-0.25 p-5">
-				<div>
+				<div className="flex flex-col">
 					<img
 						src="/src/assets/arrow-left.png"
-						className="justify-self-start self-center max-w-10 hover:cursor-pointer hover:text-amber-300"
+						className="self-start max-w-10 hover:cursor-pointer hover:text-amber-300"
 						onClick={() => incrementMonth(false)}
 					/>
 					<img
 						src="/src/assets/double-arrow-left.png"
-						className="justify-self-start self-center max-w-9 hover:cursor-pointer hover:text-amber-300"
+						className="self-start max-w-9 hover:cursor-pointer hover:text-amber-300"
 						onClick={() => incrementYear(false)}
 					/>
 				</div>
-				<div className="text-xl">
+				<div className="flex flex-col text-xl justify-center">
 					{monthName} <br /> {displayDate.year}
 				</div>
-				<div>
+				<div className="flex flex-col">
 					<img
 						src="/src/assets/arrow-right.png"
-						className="justify-self-end self-center max-w-10 hover:cursor-pointer hover:text-amber-300"
+						className="self-end max-w-10 hover:cursor-pointer hover:text-amber-300"
 						onClick={() => incrementMonth(true)}
 					/>
 					<img
 						src="/src/assets/double-arrow-right.png"
-						className="justify-self-end self-center max-w-9 hover:cursor-pointer hover:text-amber-300"
+						className="self-end max-w-9 hover:cursor-pointer hover:text-amber-300"
 						onClick={() => incrementYear(true)}
 					/>
 				</div>

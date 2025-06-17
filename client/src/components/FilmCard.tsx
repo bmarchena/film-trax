@@ -7,7 +7,7 @@ interface FilmCardProps {
 
 const FilmCard = ({ film, addFilm }: FilmCardProps) => {
 	return (
-		<div className="border-2 mb-10 p-5 rounded-4xl w-xl flex flex-col">
+		<div className="border-2 mb-10 p-5 rounded-4xl xs:w-xs md:w-xl flex flex-col">
 			<a
 				href={`https://imdb.com/title/${film.imdbId}`}
 				target="_blank"
@@ -29,7 +29,7 @@ const FilmCard = ({ film, addFilm }: FilmCardProps) => {
 					<div className="mb-5">
 						Starring: <span className="italic">{film.actors}</span>
 					</div>
-					<div className="">{film.plot}</div>
+					<div className="hidden sm:block">{film.plot}</div>
 				</div>
 			</div>
 			<img
