@@ -30,3 +30,13 @@ export const getFilmsDB = () =>
 	})
 		.then((res) => res.json())
 		.catch((err) => console.error("Error:", err));
+
+export const getDatesDB = () =>
+	fetch("http://localhost:8080/dates", {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	})
+		.then((res) => res.json())
+		.catch((err) => console.error("Error:", err));

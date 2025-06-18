@@ -1,29 +1,6 @@
-export const weekdays = {
-	sun: "Sunday",
-	mon: "Monday",
-	tue: "Tuesday",
-	wed: "Wednesday",
-	thu: "Thursday",
-	fri: "Friday",
-	sat: "Saturday",
-};
+export const weekdayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-export const months = {
-	jan: "January",
-	feb: "February",
-	mar: "March",
-	apr: "April",
-	may: "May",
-	jun: "June",
-	jul: "July",
-	aug: "August",
-	sep: "September",
-	oct: "October",
-	nov: "November",
-	dec: "December",
-};
-
-export const monthsArr = [
+export const monthNames = [
 	"January",
 	"February",
 	"March",
@@ -37,5 +14,3 @@ export const monthsArr = [
 	"November",
 	"December",
 ];
-
-export type MonthAbbr = keyof typeof months;

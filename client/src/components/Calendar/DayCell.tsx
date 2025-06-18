@@ -10,6 +10,7 @@ const DayCell = ({ date, selected, isToday, clickDay }: DayCellProps) => {
 		clickDay(date.day + 1);
 	};
 
+	// Could move this inline using a template string + ternary operator, but I prefer the readablity this way
 	const outerClass = selected
 		? "border-1 m-0.25 hover:cursor-pointer text-blue-300"
 		: "border-1 m-0.25 hover:cursor-pointer hover:text-amber-500";

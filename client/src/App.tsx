@@ -1,28 +1,26 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { Calendar } from "./components/Calendar/";
-import FilmCard from "./components/Search/FilmCard";
-import type { DayObj, Film } from "./types";
-import { getTodayObj } from "./utils";
-import { addDateToDB, addFilmToDB, fetchFilmOMDB, searchOMDB } from "./api";
-import { getFilmsDB } from "./api/server";
 import { Search } from "./components/Search";
+import * as api from "./api";
+import type { DayObj, Film } from "./types";
 
 function App() {
-	const today = getTodayObj();
 	const [selectedDate, setSelectedDate] = useState<DayObj>({
-		month: today.month,
-		day: today.day,
-		year: today.year,
+		month: 0,
+		day: 0,
+		year: 0,
 	});
 	const [queriedFilms, setQueriedFilms] = useState<Film[]>([]);
 	const [loading, setLoading] = useState(false);
-	const [watchedFilmIds, setWatchedFilmIds] = useState<Film[]>([]);
+	const [filmIdsDB, setFilmIdsDB] = useState<string[]>([]);
 
 	useEffect(() => {
-		getFilmsDB()
+		api
+			.getFilmsDB()
 			.then((data) => data.films.map((obj: Film) => obj.imdbId))
-			.then((filmArray) => setWatchedFilmIds(filmArray));
+			.then((filmArray) => setFilmIdsDB(filmArray));
+		api.getDatesDB().then((data) => console.table(data.dates));
 	}, []);
 
 	function fetchCardsData(term: string) {
@@ -31,11 +29,12 @@ function App() {
 			return;
 		}
 		setLoading(true);
-		searchOMDB(term)
+		api
+			.searchOMDB(term)
 			.then(async (films) => {
 				return await Promise.all(
 					films.map((film: Film) => {
-						return fetchFilmOMDB(film);
+						return api.fetchFilmOMDB(film);
 					})
 				);
 			})
@@ -44,16 +43,12 @@ function App() {
 	}
 
 	function addFilmToDate(film: Film) {
-		addFilmToDB(film).then(() => addDateToDB(selectedDate, film));
+		api.addFilmToDB(film).then(() => api.addDateToDB(selectedDate, film));
 	}
 
 	return (
 		<div>
-			<Calendar
-				today={today}
-				selectedDate={selectedDate}
-				setSelectedDate={setSelectedDate}
-			/>
+			<Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 			<Search
 				addFilmToDate={addFilmToDate}
 				fetchCardsData={fetchCardsData}

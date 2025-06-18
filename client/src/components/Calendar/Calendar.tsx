@@ -1,26 +1,32 @@
-import { useState } from "react";
-import { monthsArr, weekdays } from "../../constants/calendar";
+import { useEffect, useState } from "react";
+import { monthNames, weekdayNames } from "../../constants/calendar";
 import DayCell from "./DayCell";
 import type { DayObj } from "../../types";
+import { getTodayObj } from "../../utils";
 
 interface CalendarProps {
-	today: DayObj;
 	selectedDate: DayObj;
 	setSelectedDate: (day: DayObj) => void;
 }
 
-const Calendar = ({ today, selectedDate, setSelectedDate }: CalendarProps) => {
+const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
+	const today = getTodayObj();
+
 	const [displayDate, setDisplayDate] = useState({
-		month: selectedDate.month,
-		year: selectedDate.year,
+		month: today.month,
+		year: today.year,
 	});
 
-	const monthName = monthsArr[displayDate.month - 1];
+	useEffect(() => {
+		setSelectedDate(today);
+	}, []);
 
-	const weekdayColumns = Object.keys(weekdays).map((weekday) => {
+	const monthName = monthNames[displayDate.month - 1];
+
+	const weekdayHeader = weekdayNames.map((dayName) => {
 		return (
-			<div className="border-1 m-0.25" key={weekday}>
-				{weekday.toUpperCase()}
+			<div className="border-1 m-0.25" key={dayName}>
+				{dayName.toUpperCase()}
 			</div>
 		);
 	});
@@ -96,7 +102,7 @@ const Calendar = ({ today, selectedDate, setSelectedDate }: CalendarProps) => {
 					isToday={isToday}
 					selected={selected}
 					clickDay={clickDay}
-					key={`${displayDate.month}-${i}`}
+					key={`${displayDate.year}-${displayDate.month}-${i + 1}`}
 				/>
 			);
 		}
@@ -143,7 +149,7 @@ const Calendar = ({ today, selectedDate, setSelectedDate }: CalendarProps) => {
 					/>
 				</div>
 			</div>
-			{weekdayColumns}
+			{weekdayHeader}
 			{dayCells}
 		</div>
 	);
