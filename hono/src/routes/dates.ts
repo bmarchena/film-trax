@@ -8,6 +8,7 @@ export const dates = new Hono();
 dates.get("/", async (c) => {
 	const data = await db
 		.select({
+			id: datesTable.id,
 			date: datesTable.date,
 			title: filmsTable.title,
 			imdbId: filmsTable.imdbId,
