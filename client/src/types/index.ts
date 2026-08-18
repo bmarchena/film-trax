@@ -14,3 +14,14 @@ export interface DayObj {
 	day: number;
 	year: number;
 }
+
+export interface MonthYear {
+	month: number;
+	year: number;
+}
+
+export interface MonthGrid {
+	offset: number;
+	padding: number;
+	days: DayObj[];
+}

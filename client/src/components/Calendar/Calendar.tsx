@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import { monthNames, weekdayNames } from "../../constants/calendar";
 import DayCell from "./DayCell";
-import type { DayObj } from "../../types";
-import { getTodayObj } from "../../utils";
+import type { DayObj, MonthYear } from "../../types";
+import { getTodayObj, getMonthGrid } from "../../utils";
 
 interface CalendarProps {
 	selectedDate: DayObj;
 	setSelectedDate: (day: DayObj) => void;
 }
 
+function isSameDay(a: DayObj, b: DayObj) {
+	return a.day === b.day && a.month === b.month && a.year === b.year;
+}
+
 const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
 	const today = getTodayObj();
 
-	const [displayDate, setDisplayDate] = useState({
+	const [displayDate, setDisplayDate] = useState<MonthYear>({
 		month: today.month,
 		year: today.year,
 	});
@@ -32,91 +36,57 @@ const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
 	});
 
 	function incrementMonth(increment: boolean) {
-		const date = { ...displayDate };
-
-		if (increment) {
-			date.month++;
-			if (date.month > 12) {
-				date.month = 1;
-				date.year++;
+		setDisplayDate(({ month, year }) => {
+			if (increment) {
+				month++;
+				if (month > 12) {
+					month = 1;
+					year++;
+				}
+			} else {
+				month--;
+				if (month <= 0) {
+					month = 12;
+					year--;
+				}
 			}
-		} else {
-			date.month--;
-			if (date.month <= 0) {
-				date.month = 12;
-				date.year--;
-			}
-		}
-
-		setDisplayDate(date);
+			return { month, year };
+		});
 	}
 
 	function incrementYear(increment: boolean) {
-		const date = { ...displayDate };
-
-		if (increment) date.year++;
-		else date.year--;
-
-		setDisplayDate(date);
+		setDisplayDate(({ month, year }) => ({
+			month,
+			year: increment ? year + 1 : year - 1,
+		}));
 	}
 
 	function clickDay(day: number) {
-		const date = { ...displayDate, day: day };
-		date.day = day;
-		setSelectedDate(date);
+		setSelectedDate({ ...displayDate, day });
 	}
 
-	function generateDayCells() {
-		const startOfMonth = new Date(displayDate.year, displayDate.month - 1);
-		const endOfMonth = new Date(displayDate.year, displayDate.month, 0);
-		const offset = startOfMonth.getUTCDay();
+	const { offset, padding, days } = getMonthGrid(
+		displayDate.month,
+		displayDate.year,
+	);
 
-		const dayCells = [];
-
-		const daysInMonth = endOfMonth.getDate();
-
-		for (let i = 0; i < offset; i++) {
-			dayCells.push(<div className="border-1 m-0.25" key={`offset-${i}`} />);
-		}
-
-		for (let i = 0; i < daysInMonth; i++) {
-			const cellDate = {
-				month: displayDate.month,
-				day: i,
-				year: displayDate.year,
-			};
-
-			const selected =
-				selectedDate.day - 1 === cellDate.day &&
-				selectedDate.month === cellDate.month &&
-				selectedDate.year === cellDate.year;
-
-			const isToday =
-				today.day - 1 === cellDate.day &&
-				today.month === cellDate.month &&
-				today.year === cellDate.year;
-
-			dayCells.push(
-				<DayCell
-					date={cellDate}
-					isToday={isToday}
-					selected={selected}
-					clickDay={clickDay}
-					key={`${displayDate.year}-${displayDate.month}-${i + 1}`}
-				/>
-			);
-		}
-
-		const padding = 6 - endOfMonth.getDay();
-
-		for (let i = 0; i < padding; i++) {
-			dayCells.push(<div className="border-1 m-0.25" key={`padding-${i}`} />);
-		}
-
-		return dayCells;
-	}
-
-	const dayCells = generateDayCells();
+	const dayCells = [
+		...Array.from({ length: offset }, (_, i) => (
+			<div className="border-1 m-0.25" key={`offset-${i}`} />
+		)),
+		...days.map((cellDate) => (
+			<DayCell
+				date={cellDate}
+				isToday={isSameDay(today, cellDate)}
+				selected={isSameDay(selectedDate, cellDate)}
+				clickDay={clickDay}
+				key={`${cellDate.year}-${cellDate.month}-${cellDate.day}`}
+			/>
+		)),
+		...Array.from({ length: padding }, (_, i) => (
+			<div className="border-1 m-0.25" key={`padding-${i}`} />
+		)),
+	];
 
 	return (
 		<div className="grid grid-cols-7 border-1">

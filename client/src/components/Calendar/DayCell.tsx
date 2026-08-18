@@ -1,5 +1,7 @@
+import type { DayObj } from "../../types";
+
 interface DayCellProps {
-	date: { month: number; day: number; year: number };
+	date: DayObj;
 	selected: boolean;
 	isToday: boolean;
 	clickDay: (day: number) => void;
@@ -7,7 +9,7 @@ interface DayCellProps {
 
 const DayCell = ({ date, selected, isToday, clickDay }: DayCellProps) => {
 	const clickHandler = () => {
-		clickDay(date.day + 1);
+		clickDay(date.day);
 	};
 
 	// Could move this inline using a template string + ternary operator, but I prefer the readablity this way
@@ -23,7 +25,7 @@ const DayCell = ({ date, selected, isToday, clickDay }: DayCellProps) => {
 
 	return (
 		<div className={outerClass} onClick={clickHandler}>
-			<div className={innerClass}>{date.day + 1}</div>
+			<div className={innerClass}>{date.day}</div>
 		</div>
 	);
 };
