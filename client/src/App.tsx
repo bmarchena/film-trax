@@ -1,11 +1,12 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { Calendar } from "./components/Calendar/";
+import { Calendar } from "./components/Calendar";
 import { Search } from "./components/Search";
 import * as api from "./api";
 import type { DayObj, Film } from "./types";
 
 function App() {
+	// TODO: ADD SOME KIND OF UI RESPONSE ON SUCCESSFUL AND ERRORED API CALLS
 	const [selectedDate, setSelectedDate] = useState<DayObj>({
 		month: 0,
 		day: 0,
@@ -35,7 +36,7 @@ function App() {
 				return await Promise.all(
 					films.map((film: Film) => {
 						return api.fetchFilmOMDB(film);
-					})
+					}),
 				);
 			})
 			.then((data) => setQueriedFilms(data))
@@ -43,7 +44,14 @@ function App() {
 	}
 
 	function addFilmToDate(film: Film) {
-		api.addFilmToDB(film).then(() => api.addDateToDB(selectedDate, film));
+		if (filmIdsDB.includes(film.imdbId)) {
+			api.addDateToDB(selectedDate, film);
+			return;
+		}
+		api.addFilmToDB(film).then(() => {
+			setFilmIdsDB((prev) => [...prev, film.imdbId]);
+			api.addDateToDB(selectedDate, film);
+		});
 	}
 
 	return (

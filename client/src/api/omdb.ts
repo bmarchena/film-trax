@@ -1,12 +1,14 @@
+const OMDB_API_KEY = import.meta.env.VITE_OMDB_API_KEY;
+
 export const searchOMDB = (term: string) =>
-	fetch(`http://www.omdbapi.com/?apikey=a3d6dd5a&s=${term}&type=movie`)
+	fetch(`http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${term}&type=movie`)
 		.then((res) => res.json())
 		.then((data) => {
 			return data.Search;
 		});
 
 export const fetchFilmOMDB = (queriedFilm: any) =>
-	fetch(`http://www.omdbapi.com/?apikey=a3d6dd5a&i=${queriedFilm.imdbID}`)
+	fetch(`http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${queriedFilm.imdbID}`)
 		.then((res) => res.json())
 		.then((data) => ({
 			title: data.Title,
